@@ -1,5 +1,10 @@
-#Advanced Git
-##Part 1: Refining Git History
+# Git Exercises
+
+## Advanced Git
+
+### Part 1: Refining Git History
+
+```bash
 HP@ABakareke_25497 MINGW64 ~/Desktop/part1
 $ git init
 Initialized empty Git repository in C:/Users/HP/Desktop/part1/.git/
@@ -238,3 +243,4 @@ branch 'master' set up to track 'origin/master'.
 
 HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
 $
+```
