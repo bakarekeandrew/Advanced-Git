@@ -244,3 +244,150 @@ branch 'master' set up to track 'origin/master'.
 HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
 $
 ```
+
+### Part2: Branching Basics 
+
+```bash
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout -b ft/new-feature
+Switched to a new branch 'ft/new-feature'
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-feature)
+$ echo "Core functionality for the new feature" > feature.txt        
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-feature)
+$ git add feature.txt
+warning: in the working copy of 'feature.txt', LF will be replaced by CRLF the next time Git touches it CRLF the next time Git touches it
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-feature)
+$ git commit -m  "Implement core functionality for new feature"       1 file changed, 1 insertion(+)
+[ft/new-feature 769aee1] Implement core functionality for new feature 1 file changed, 1 insertion(+)
+ create mode 100644 feature.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-feature)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ echo "Welcome to the project!" > readme.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)                  CRLF the next time Git touches it
+$ git add readme.txt
+warning: in the working copy of 'readme.txt', LF will be replaced by 
+CRLF the next time Git touches it
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git commit -m "Updated project readme"
+[master d3922e2] Updated project readme
+ 1 file changed, 1 insertion(+)
+ create mode 100644 readme.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin master
+To https://github.com/bakarekeandrew/Advanced-git.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/bakarekeandrew/Advanced-git.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin ft/new-feature
+Enumerating objects: 11, done.
+Merge branch 'master' of https://github.com/bakarekeandrew/Advanced-gCounting objects: 100% (11/11), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (11/11), 968 bytes | 22.00 KiB/s, done.        
+Total 11 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)       
+remote: Resolving deltas: 100% (2/2), done.
+remote:
+remote: Create a pull request for 'ft/new-feature' on GitHub by visiting:
+remote:      https://github.com/bakarekeandrew/Advanced-git/pull/new/ft/new-feature
+remote:
+To https://github.com/bakarekeandrew/Advanced-git.git
+ * [new branch]      ft/new-feature -> ft/new-feature
+
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git pull origin master
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 6 (delta 3), reused 0 (delta 0), pack-reused 0 (from 0 
+Unpacking objects: 100% (6/6), 3.79 KiB | 53.00 KiB/s, done.
+From https://github.com/bakarekeandrew/Advanced-git
+ * branch            master     -> FETCH_HEAD
+   22c8ac7..797b269  master     -> origin/master
+Merge made by the 'ort' strategy.
+ README.md | 246 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 246 insertions(+)
+ create mode 100644 README.md
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin --delete ft/new-feature
+To https://github.com/bakarekeandrew/Advanced-git.git
+ - [deleted]         ft/new-feature
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git log -- oneline
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout -b ft/new-branch-from-commit
+Switched to a new branch 'ft/new-branch-from-commit'
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-branch-from-commit)
+$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git merge ft/new-branch-from-commit
+Already up to date.
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git add .
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git commit -m "Merged ft/new-branch-from-commit into master"
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout ft/new-branch-from-commit
+Switched to branch 'ft/new-branch-from-commit'
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-branch-from-commit)
+$ git rebase master
+Current branch ft/new-branch-from-commit is up to date.
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/new-branch-from-commit)
+$ git branch -m ft/new-branch-from-commit ft/improved-branch-name
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/improved-branch-name)
+$ git log --oneline
+14e2ce0 (HEAD -> ft/improved-branch-name, master) Merge branch 'master' of https://github.com/bakarekeandrew/Advanced-git I want to pull the latest changes
+d3922e2 Updated project readme
+797b269 (origin/master) Update README.md
+6e1ae9f Create README.md
+22c8ac7 Implemented test 5
+687f88d chore: Create second file
+56c9864 chore: Create initial file
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/improved-branch-name)
+$ git checkout master
+Switched to branch 'master'
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$
+
+```
