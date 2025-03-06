@@ -637,4 +637,13 @@ To https://github.com/bakarekeandrew/Advanced-git.git
 HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
 
 ```
+### 10.Pulling Changes from Remote Repositories
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git pull origin master
+From https://github.com/bakarekeandrew/Advanced-git
+ * branch            master     -> FETCH_HEAD      
+Already up to date.                                                  /Advanced-git.git'
+                                                     
+```
 
