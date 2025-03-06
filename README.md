@@ -391,3 +391,250 @@ HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
 $
 
 ```
+
+## Part 3: Advanced Workflows
+
+
+### 1. Stashing Changes
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ echo "Temporary changes" > temp.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git stash
+Saved working directory and index state WIP on master: 14e2ce0 Merge 
+branch 'master' of https://github.com/bakarekeandrew/Advanced-git I want to pull the latest changes
+```
+### 2. Retrieving Stashed Changes
+
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git stash pop
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)     
+        temp.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")    
+Dropped refs/stash@{0} (a406a87f819e0762868728dd1b4725fcd8ff745f)
+
+```
+### 3.Branch Merging Conflicts
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ echo "Temporary changes" > temp.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git stash
+Saved working directory and index state WIP on master: 14e2ce0 Merge 
+branch 'master' of https://github.com/bakarekeandrew/Advanced-git I want to pull the latest changes
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git stash pop
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)     
+        temp.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")    
+Dropped refs/stash@{0} (a406a87f819e0762868728dd1b4725fcd8ff745f)
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout -b ft/conflict-branch 
+Switched to a new branch 'ft/conflict-branch'
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/conflict-branch)
+$ echo "Changes in conflict branch" > conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/conflict-branch)      
+$ git add conflict.txt
+warning: in the working copy of 'conflict.txt', LF will be replaced by CRLF the next time Git touches it
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/conflict-branch)      
+$ git commit -m "Changes in conflict branch"
+[ft/conflict-branch 36875d0] Changes in conflict branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (ft/conflict-branch)      
+$ git checkout master
+M       README.md
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ echo "Changes in master branch" > conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git add conflict.txt
+warning: in the working copy of 'conflict.txt', LF will be replaced by CRLF the next time Git touches it
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git commit -m "Changes in master branch"
+[master 88c762f] Changes in master branch
+ 1 file changed, 1 insertion(+)
+ create mode 100644 conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git merge ft/conflict-branch
+Auto-merging conflict.txt
+CONFLICT (add/add): Merge conflict in conflict.txt
+Automatic merge failed; fix conflicts and then commit the result.    
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master|MERGING)
+$ nano conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master|MERGING)
+$ git add conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master|MERGING)
+$ git commit -m "Resolved merge conflict in conflict.txt"
+[master 9823f91] Resolved merge conflict in conflict.txt
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$
+```
+### 4.Resolving Merge Conflicts with a Merge Tool
+
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git mergetool
+
+This message is displayed because 'merge.tool' is not configured.    
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:  
+opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare smerge emerge vimdiff nvimdiff
+No files need merging
+
+```
+### 5.Understanding Detached HEAD State
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git log --oneline
+9823f91 (HEAD -> master) Resolved merge conflict in conflict.txt     
+88c762f Changes in master branch
+36875d0 (ft/conflict-branch) Changes in conflict branch
+14e2ce0 (origin/master, ft/improved-branch-name) Merge branch 'master' of https://github.com/bakarekeandrew/Advanced-git I want to pull the latest changes
+d3922e2 Updated project readme
+797b269 Update README.md
+6e1ae9f Create README.md
+22c8ac7 Implemented test 5
+687f88d chore: Create second file
+56c9864 chore: Create initial file
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout 
+M       README.md
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)     
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git checkout master
+M       README.md
+Already on 'master'
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$
+```
+
+### 6.Ignoring Files/Directories:
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ echo "/tmp" > .gitignore
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git add .gitignore
+warning: in the working copy of '.gitignore', LF will be replaced by 
+CRLF the next time Git touches it
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git commit -m "Added .gitignore to exclude /tmp"
+[master a7cfa7a] Added .gitignore to exclude /tmp
+ 1 file changed, 1 insertion(+)
+ create mode 100644 .gitignore
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ 
+```
+### 7.Working with Tags
+```bash
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git tag v1.0
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin v1.0
+Enumerating objects: 31, done.
+Counting objects: 100% (31/31), done.  
+Delta compression using up to 4 threads
+Compressing objects: 100% (24/24), done.
+Writing objects: 100% (31/31), 5.84 KiB | 122.00 KiB/s, done.  
+Total 31 (delta 11), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (11/11), done.
+To https://github.com/bakarekeandrew/Advanced-git.git
+ * [new tag]         v1.0 -> v1.0
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$
+```
+### 8.Listing and Deleting Tags
+```
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git tag
+v1.0
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git tag -d v1.0
+Deleted tag 'v1.0' (was a7cfa7a)
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin --delete v1.0
+To https://github.com/bakarekeandrew/Advanced-git.git
+ - [deleted]         v1.0
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$
+```
+### 9. Pushing Local Work to Remote Repositories
+
+```
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin master
+Enumerating objects: 16, done.
+Counting objects: 100% (16/16), done.  
+Delta compression using up to 4 threads
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (14/14), 1.28 KiB | 31.00 KiB/s, done.  
+Total 14 (delta 6), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (6/6), completed with 1 local object. 
+To https://github.com/bakarekeandrew/Advanced-git.git
+   500a2e0..2d49fe6  master -> master
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+$ git push origin ft/conflict-branch
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: 
+remote: Create a pull request for 'ft/conflict-branch' on GitHub by visiting:
+remote:      https://github.com/bakarekeandrew/Advanced-git/pull/new/ft/conflict-branch
+remote:
+To https://github.com/bakarekeandrew/Advanced-git.git
+ * [new branch]      ft/conflict-branch -> ft/conflict-branch        
+
+HP@ABakareke_25497 MINGW64 ~/Desktop/part1 (master)
+
+```
